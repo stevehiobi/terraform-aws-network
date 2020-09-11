@@ -1,5 +1,5 @@
 variable "project" {
-  default = "Test"
+  default = "eks-101"
 }
 variable "aws_region" {
   default = "us-east-1"

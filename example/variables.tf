@@ -1,5 +1,5 @@
 variable "project" {
-  default = "Test"
+  default = "eks-101"
 }
 variable "region" {
   default = "us-east-1"
