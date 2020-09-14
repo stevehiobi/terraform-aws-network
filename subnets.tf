@@ -7,7 +7,7 @@ resource "aws_subnet" "public" {
 
   tags = merge(
     {
-      "Name" = "${var.project} Public Subnet ${count.index}",
+      "Name"       = "${var.project} Public Subnet ${count.index}",
       "SubnetType" = "Public"
     },
     var.tags,
@@ -24,7 +24,7 @@ resource "aws_subnet" "private" {
 
   tags = merge(
     {
-      "Name" = "${var.project} Private Subnet ${count.index}",
+      "Name"       = "${var.project} Private Subnet ${count.index}",
       "SubnetType" = "Private"
     },
     var.tags,
@@ -41,7 +41,7 @@ resource "aws_subnet" "mgmt" {
 
   tags = merge(
     {
-      "Name" = "${var.project} MGMT Subnet ${count.index}",
+      "Name"       = "${var.project} MGMT Subnet ${count.index}",
       "SubnetType" = "Mgmt"
     },
     var.tags

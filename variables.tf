@@ -11,7 +11,9 @@ variable "tags" {
   type    = map
   default = {}
 }
-variable "availability_zones" {}
+variable "availability_zones" {
+  default = ["us-east-1a", "us-east-1b", "us-east-1c"]
+}
 variable "vpc_cidr" {
   description = "VPC cidr block"
 }
@@ -29,7 +31,8 @@ variable "subnet_cidrs_mgmt" {
 }
 
 variable "vpc_tags" {
-  type = map
+  type    = map
+  default = {}
 }
 
 variable "public_subnet_tags" {
@@ -45,6 +48,11 @@ variable "private_subnet_tags" {
 }
 
 variable "create_natgateways" {
+  type    = bool
+  default = false
+}
+
+variable "enable_flowlogs" {
   type    = bool
   default = false
 }

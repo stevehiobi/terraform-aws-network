@@ -1,4 +1,5 @@
 resource "aws_cloudwatch_log_group" "vpc-log" {
+  count             = var.enable_flowlogs ? 1 : 0
   name              = "/aws/vpc/${var.project}-${var.environment}/flow"
   retention_in_days = 30
 
@@ -9,14 +10,16 @@ resource "aws_cloudwatch_log_group" "vpc-log" {
 }
 
 resource "aws_flow_log" "main" {
-  iam_role_arn    = aws_iam_role.vpc-flow-logs-role.arn
-  log_destination = aws_cloudwatch_log_group.vpc-log.arn
+  count           = var.enable_flowlogs ? 1 : 0
+  iam_role_arn    = aws_iam_role.vpc-flow-logs-role[0].arn
+  log_destination = aws_cloudwatch_log_group.vpc-log[0].arn
   traffic_type    = "ALL"
   vpc_id          = aws_vpc.main.id
 }
 
 resource "aws_iam_role" "vpc-flow-logs-role" {
-  name = "${var.project}-${var.environment}-vpc-flow-logs-role"
+  count = var.enable_flowlogs ? 1 : 0
+  name  = "${var.project}-${var.environment}-vpc-flow-logs-role"
 
   assume_role_policy = <<EOF
 {
@@ -36,8 +39,9 @@ EOF
 }
 
 resource "aws_iam_role_policy" "vpc-flow-logs-policy" {
-  name = "${var.project}-${var.environment}-vpc-flow-logs-policy"
-  role = aws_iam_role.vpc-flow-logs-role.id
+  count = var.enable_flowlogs ? 1 : 0
+  name  = "${var.project}-${var.environment}-vpc-flow-logs-policy"
+  role  = aws_iam_role.vpc-flow-logs-role[0].id
 
   policy = <<EOF
 {
